@@ -9,8 +9,8 @@ let package = Package(
         .executable(name: "hap-demo", targets: ["hap-demo"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Bouke/SRP.git", from: "3.1.0"),
-        .package(url: "https://github.com/Bouke/HKDF.git", from: "3.1.0"),
+        .package(url: "https://github.com/Bouke/SRP.git", Version("3.1.0") ..< Version("3.2.0")),
+        .package(url: "https://github.com/Bouke/HKDF.git", Version("3.1.0") ..< Version("3.2.0")),
         .package(url: "https://github.com/IBM-Swift/BlueCryptor.git", from: "1.0.21"),
         .package(url: "https://github.com/crossroadlabs/Regex.git", from: "1.1.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.13.0"),
