@@ -1,5 +1,9 @@
 #if os(Linux)
-    @_exported import Glibc
+    #if canImport(Glibc)
+        @_exported import Glibc
+    #elseif canImport(Musl)
+        @_exported import Musl
+    #endif
 #else
     @_exported import Darwin.C
 #endif
