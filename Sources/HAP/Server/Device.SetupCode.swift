@@ -1,6 +1,10 @@
 import Foundation
 #if os(Linux)
-    import Glibc
+    #if canImport(Glibc)
+        @_exported import Glibc
+    #elseif canImport(Musl)
+        @_exported import Musl
+    #endif
 #endif
 import Regex
 

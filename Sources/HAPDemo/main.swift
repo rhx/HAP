@@ -5,8 +5,11 @@ import Logging
 #if os(macOS)
     import Darwin
 #elseif os(Linux)
-    import Dispatch
-    import Glibc
+    #if canImport(Glibc)
+        @_exported import Glibc
+    #elseif canImport(Musl)
+        @_exported import Musl
+    #endif
 #endif
 
 fileprivate let logger = Logger(label: "bridge")
