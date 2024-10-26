@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.9
 
 import PackageDescription
 
@@ -17,6 +17,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.13.0"),
         .package(url: "https://github.com/apple/swift-log.git", Version("0.0.0") ..< Version("2.0.0")),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.0"),
+        .package(url: "https://github.com/Bouke/NetService.git", from: "0.7.0"),
     ],
     targets: [
         .target(name: "CQRCode", exclude: ["LICENSE.txt"]),
@@ -37,6 +38,7 @@ let package = Package(
                     "CQRCode",
                     "VaporHTTP",
                     .product(name: "Crypto", package: "swift-crypto"),
+                    .product(name: "NetService", package: "NetService", condition: .when(platforms: [.linux]))
                 ],
                 exclude: ["Base/Predefined/README"]),
         .executableTarget(name: "HAPDemo",
@@ -51,9 +53,4 @@ let package = Package(
 #if os(macOS)
     package.products.append(.executable(name: "hap-update", targets: ["HAPInspector"]))
     package.targets.append(.executableTarget(name: "HAPInspector"))
-#endif
-
-#if os(Linux)
-    package.dependencies.append(.package(url: "https://github.com/Bouke/NetService.git", from: "0.7.0"))
-    package.targets.first(where: { $0.name == "HAP" })!.dependencies.append("NetService")
 #endif
