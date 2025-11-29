@@ -18,8 +18,11 @@ public class FileStorage: Storage {
     }
 
     public func read() throws -> Data {
-        let fd = fopen(filename, "r")
-        if fd == nil { try throwError() }
+        guard let fd = fopen(filename, "r") else {
+            try throwError()
+            fatalError("throwError should have thrown")
+        }
+        defer { fclose(fd) }
         try posix(fseek(fd, 0, COperatingSystem.SEEK_END))
         let size = ftell(fd)
         rewind(fd)
@@ -27,16 +30,18 @@ public class FileStorage: Storage {
         _ = buffer.withUnsafeMutableBytes {
             COperatingSystem.fread($0.bindMemory(to: UInt8.self).baseAddress!, size, 1, fd)
         }
-        fclose(fd)
         return buffer
     }
 
     public func write(_ newValue: Data) throws {
-        let fd = COperatingSystem.fopen(filename, "w")
+        guard let fd = COperatingSystem.fopen(filename, "w") else {
+            try throwError()
+            return
+        }
+        defer { fclose(fd) }
         _ = newValue.withUnsafeBytes {
             COperatingSystem.fwrite($0.bindMemory(to: UInt8.self).baseAddress!, newValue.count, 1, fd)
         }
-        fclose(fd)
     }
 }
 
