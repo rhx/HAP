@@ -6,7 +6,6 @@ import Foundation
         @_exported import Musl
     #endif
 #endif
-import Regex
 
 extension Device {
     public enum SetupCode: ExpressibleByStringLiteral {
@@ -32,7 +31,7 @@ extension Device {
                                 "333-33-333", "444-44-444", "555-55-555",
                                 "666-66-666", "777-77-777", "888-88-888",
                                 "999-99-999", "123-45-678", "876-54-321"]
-            return (setupCode =~ "^\\d{3}-\\d{2}-\\d{3}$") && !invalidCodes.contains(setupCode)
+            return setupCode.contains(/^\d{3}-\d{2}-\d{3}$/) && !invalidCodes.contains(setupCode)
         }
 
         /// Generate a valid random setup code, used to pair with the device.

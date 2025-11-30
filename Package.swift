@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "HAP",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v13),
     ],
     products: [
         .library(name: "HAP", targets: ["HAP"]),
@@ -13,7 +13,6 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Bouke/SRP.git", from: "3.2.0"),
-        .package(url: "https://github.com/crossroadlabs/Regex.git", from: "1.1.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.13.0"),
         .package(url: "https://github.com/apple/swift-log.git", Version("0.0.0") ..< Version("2.0.0")),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.0"),
@@ -34,13 +33,15 @@ let package = Package(
                 dependencies: [
                     "SRP",
                     .product(name: "Logging", package: "swift-log"),
-                    "Regex",
                     "CQRCode",
                     "VaporHTTP",
                     .product(name: "Crypto", package: "swift-crypto"),
                     .product(name: "NetService", package: "NetService", condition: .when(platforms: [.linux]))
                 ],
-                exclude: ["Base/Predefined/README"]),
+                exclude: ["Base/Predefined/README"],
+                swiftSettings: [
+                    .enableUpcomingFeature("BareSlashRegexLiterals")
+                ]),
         .executableTarget(name: "HAPDemo",
                           dependencies: [
                             "HAP",
