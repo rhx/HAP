@@ -1,6 +1,7 @@
 *.xcodeproj/
 /Packages
 /.build
+/.swiftmp
 Switch
 Package.resolved
 /configuration.json
