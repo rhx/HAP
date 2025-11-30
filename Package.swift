@@ -17,7 +17,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.13.0"),
         .package(url: "https://github.com/apple/swift-log.git", Version("0.0.0") ..< Version("2.0.0")),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.0"),
-        .package(url: "https://github.com/rhx/NetService.git", branch: "master"),
+        .package(url: "https://github.com/rhx/NetService.git", branch: "main"),
     ],
     targets: [
         .target(name: "CQRCode", exclude: ["LICENSE.txt"]),
